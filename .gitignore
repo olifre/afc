@@ -33,3 +33,6 @@
 
 # CMake build dir
 build/
+
+# Ignore backup files from Ghostwriter
+*.md.backup
