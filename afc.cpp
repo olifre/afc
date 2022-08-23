@@ -228,6 +228,13 @@ int main(int argc, char **argv) {
 	          << filesReadError << " files could not be read."
 	          << std::endl;
 
-	return 0;
+	int exitCode = 0;
 
+	if (filesReadError > 0) {
+		exitCode = 1;
+	} else if (filesOK < filesToCheck) {
+		exitCode = 2;
+	}
+
+	return exitCode;
 }
