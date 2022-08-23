@@ -42,4 +42,4 @@ jobs:
 
     - name: Run the tool
       working-directory: ${{runner.workspace}}/build
-      run: ./afc --help
+      run: ./afc
