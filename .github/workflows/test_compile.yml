@@ -1,0 +1,45 @@
+name: "Test compile"
+
+on:
+  push
+
+env:
+  BUILD_TYPE: RelWithDebInfo
+
+jobs:
+  test-compile:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        with-werror: [ YES, NO ]
+
+    name: Compile with werror=${{ matrix.with-werror }}
+
+    steps:
+    - name: Update apt repos
+      run: |
+        sudo apt-get -y update
+
+    - name: Install basics for compilation
+      run: |
+        sudo apt-get -y install zlib1g-dev
+
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Create Build dir
+      run: cmake -E make_directory ${{runner.workspace}}/build
+
+    - name: Configure with werror=${{ matrix.with-werror }}
+      working-directory: ${{runner.workspace}}/build
+      run: |
+        cmake $GITHUB_WORKSPACE -DBUILD_WITH_WERROR=${{ matrix.with-werror }}
+
+    - name: Build
+      working-directory: ${{runner.workspace}}/build
+      run: cmake --build . --config $BUILD_TYPE
+
+    - name: Run the tool
+      working-directory: ${{runner.workspace}}/build
+      run: ./afc --help
