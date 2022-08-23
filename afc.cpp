@@ -151,6 +151,16 @@ void printHelp(const char* progName) {
 	cmd.str(std::string());
 	cmd << "  -D disable colour even when output is a TTY.";
 	std::cout << "| " << cmd.str() << std::setw(80-2-cmd.str().length())                    << " |" << std::endl;
+	std::cout << "|------------------------------------------------------------------------------|" << std::endl;
+	cmd.str(std::string());
+	cmd << "Exit codes:";
+	std::cout << "| " << cmd.str() << std::setw(80-2-cmd.str().length())                    << " |" << std::endl;
+	cmd.str(std::string());
+	cmd << " - 1 if any file could not be accessed.";
+	std::cout << "| " << cmd.str() << std::setw(80-2-cmd.str().length())                    << " |" << std::endl;
+	cmd.str(std::string());
+	cmd << " - 2 if any CRC error occured.";
+	std::cout << "| " << cmd.str() << std::setw(80-2-cmd.str().length())                    << " |" << std::endl;
 	std::cout <<"\\------------------------------------------------------------------------------/" << std::endl;
 }
 
