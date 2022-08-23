@@ -27,3 +27,6 @@ include_directories(afc ZLIB_INCLUDE_DIRS)
 target_link_libraries(afc ZLIB::ZLIB)
 
 install(TARGETS afc DESTINATION bin)
+
+enable_testing()
+add_subdirectory(tests)
