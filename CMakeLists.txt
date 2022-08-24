@@ -27,6 +27,7 @@ include_directories(afc ZLIB_INCLUDE_DIRS)
 target_link_libraries(afc ZLIB::ZLIB)
 
 install(TARGETS afc DESTINATION bin)
+install(FILES afc.1 DESTINATION ${CMAKE_INSTALL_MANDIR}/man1)
 
 enable_testing()
 add_subdirectory(tests)
