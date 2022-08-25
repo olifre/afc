@@ -1,3 +1,6 @@
+add_test(NAME "Run and show help"
+	COMMAND sh -c "$<TARGET_FILE:afc> --help")
+
 add_test(NAME "Generate correct CRC file"
         COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/gen_correct_crc_file.sh)
 

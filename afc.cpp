@@ -9,6 +9,7 @@
 #include <sstream>
 #include <limits.h>
 #include <time.h>
+#include <getopt.h>
 
 #include <zlib.h>
 
@@ -146,10 +147,13 @@ void printHelp(const char* progName) {
 	cmd << " Possible options: ";
 	std::cout << "| " << cmd.str() << std::setw(80-2-cmd.str().length())                    << " |" << std::endl;
 	cmd.str(std::string());
-	cmd << "  -C force colour even when output is not a TTY.";
+	cmd << "  -C        force colour even when output is not a TTY.";
 	std::cout << "| " << cmd.str() << std::setw(80-2-cmd.str().length())                    << " |" << std::endl;
 	cmd.str(std::string());
-	cmd << "  -D disable colour even when output is a TTY.";
+	cmd << "  -D        disable colour even when output is a TTY.";
+	std::cout << "| " << cmd.str() << std::setw(80-2-cmd.str().length())                    << " |" << std::endl;
+	cmd.str(std::string());
+	cmd << "  -h,--help show this help text.";
 	std::cout << "| " << cmd.str() << std::setw(80-2-cmd.str().length())                    << " |" << std::endl;
 	std::cout << "|------------------------------------------------------------------------------|" << std::endl;
 	cmd.str(std::string());
@@ -163,6 +167,18 @@ void printHelp(const char* progName) {
 	std::cout << "| " << cmd.str() << std::setw(80-2-cmd.str().length())                    << " |" << std::endl;
 	std::cout <<"\\------------------------------------------------------------------------------/" << std::endl;
 }
+
+namespace longParameters {
+        enum _longParameters {
+		NONE,
+		HELP,
+	};
+}
+
+const struct option long_options[] = {
+	{"help",	no_argument,	nullptr,	longParameters::HELP},
+	{nullptr,	0,		nullptr,	longParameters::NONE},
+};
 
 int main(int argc, char **argv) {
 
@@ -178,12 +194,23 @@ int main(int argc, char **argv) {
 		useColour=false;
 	}
 
-	int opt;
-	while ((opt=getopt(argc, argv, "+CD")) != -1) {
-		switch (opt) {
-			case 'C': useColour=true; break;
-			case 'D': useColour=false; break;
+	{
+		int opt = 0;
+		int option_index = 0;
+		while ((opt=getopt_long(argc, argv, "+hCD", long_options, &option_index)) != -1) {
+			switch (opt) {
+				case 'h':
+				case longParameters::HELP:
+					printHelp(argv[0]);
+					exit(0);
+				case 'C':
+					useColour=true;
+					break;
+				case 'D':
+					useColour=false;
+					break;
 			}
+		}
 	}
 
 	size_t maxStrLen=0;
