@@ -217,10 +217,11 @@ int main(int argc, char **argv) {
 	for (int i=optind; i<argc; i++) {
 		char *fileName=argv[i];
 		char *baseName = strdup(fileName);
-		if (strlen(baseName) > maxStrLen) {
-			maxStrLen=strlen(baseName);
-		}
+		size_t baseNameLen = strlen(basename(baseName));
 		free(baseName);
+		if (baseNameLen > maxStrLen) {
+			maxStrLen = baseNameLen;
+		}
 	}
 
 	int filesOK=0;
