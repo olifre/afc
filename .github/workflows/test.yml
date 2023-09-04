@@ -26,7 +26,7 @@ jobs:
         sudo apt-get -y install zlib1g-dev
 
     - name: Checkout repo
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Create Build dir
       run: cmake -E make_directory ${{runner.workspace}}/build
